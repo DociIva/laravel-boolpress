@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+// Pirma dichiarazione
+use App\Post;
 
 class PostController extends Controller
 {
@@ -14,7 +16,10 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        //Per prendere tutti i post e farli vedere in archivio che poi usi nella index
+        $posts = Post::all();
+
+        return view('admin.posts.index', compact('posts'));
     }
 
     /**
@@ -47,6 +52,12 @@ class PostController extends Controller
     public function show($id)
     {
         //
+        $post = Post::find($id);
+
+        if( ! $post) {
+            abort(404);
+        }
+        return view('admin.posts.show', compact('post'));
     }
 
     /**
