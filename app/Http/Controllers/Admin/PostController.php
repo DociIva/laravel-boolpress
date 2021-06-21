@@ -4,8 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+
 // Pirma dichiarazione
 use App\Post;
+
 
 class PostController extends Controller
 {
@@ -30,6 +33,7 @@ class PostController extends Controller
     public function create()
     {
         //
+        return view('admin.posts.create');
     }
 
     /**
@@ -40,7 +44,30 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //VALIDAZIONE
+        $request->validate([ 
+            'title' => 'required|unique:posts!max:5', 
+            'content' => 'required',
+        ], [
+
+            'required' => 'The :attribute is required!!',
+            'unique' => 'The :attribute is already in use for an another post',
+            'max' => 'Max :max chararters allowed for the :attribute'
+        ]);
+
+        $data = $request->all();
+
+        //Slug generate
+        $data['slug'] = Str::slug($data['title'], '-');
+
+        //create and seva record on db
+        $new_post = new Post();
+
+        $new_post->fill($data); // <- fillable dichiarare prop del model post 
+        
+        $new_post->save();
+
+        return redirect()->route('admin.posts.show', $new_post->id);
     }
 
     /**
@@ -69,6 +96,12 @@ class PostController extends Controller
     public function edit($id)
     {
         //
+        $post = Post::find($id);
+        if( ! $post) {
+            abort(404);
+        }
+        
+        return view('admin.posts.edit', compact('post'));
     }
 
     /**

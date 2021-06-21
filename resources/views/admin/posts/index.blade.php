@@ -3,8 +3,10 @@
 @section('content')
     <div class="container">
         <h1>Our Post</h1>
+        {{-- Link per creazione--}}
+        <a class="btn btn-primary" href="{{ route('admin.posts.create')}}">Create New Post</a>
 
-        <table  class="table">
+        <table  class="table mt-5">
              <thead>
                  <tr>
                      <td>Id</td>
@@ -17,9 +19,12 @@
                      <tr>
                         <td>{{ $post->id }}</td>
                         <td>{{ $post->title }}</td>
-                        <td> <a class="btn btn-success" href="{{ route('admin.posts.show', $post->id)  }}">SHOW</a>
+                        <td> 
+                            <a class="btn btn-success" href="{{ route('admin.posts.show', $post->id)  }}">SHOW</a>
                         </td>
-                        <td>EDIT</td>
+                        <td>
+                            <a class="btn btn-warning" href="{{route('admin.posts.edit', $post->id)}}">EDIT</a>
+                        </td>
                         <td>DELETE</td>
 
                      </tr>
