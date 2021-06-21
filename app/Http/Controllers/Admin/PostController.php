@@ -113,7 +113,28 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        //VALIDE
+        $request->validate([ 
+            'title' => 'required|unique:posts!max:5', 
+            'content' => 'required',
+        ], [
+
+            'required' => 'The :attribute is required!!',
+            'unique' => 'The :attribute is already in use for an another post',
+            'max' => 'Max :max chararters allowed for the :attribute'
+        ]);
+        $data = $request->all();
+
+        $post = Post::find($id);
+
+        //Slug gen se il titolo non cambia
+        if($data['title'] != $post->title) {
+            $data['slug'] = Str::slug($data['title'], '-');
+        }
+
+        $post->update($data); // Fillable nec
+
+        return redirect()->route('admin.posts.show', $post->id);
     }
 
     /**
@@ -125,5 +146,9 @@ class PostController extends Controller
     public function destroy($id)
     {
         //
+        $post = Post::find($id);
+        $post->delete();
+
+        return redirect()->route('admin.posts.index')->with('deleted', $post->title);
     }
 }
