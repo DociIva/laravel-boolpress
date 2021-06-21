@@ -6,7 +6,7 @@
     
         <div class="mb-5">
            
-            <a href=" {{ route('admin.posts.edit' . $post->id )}}">EDIT POST</a>
+            <a href=" {{ route('admin.posts.edit' , $post->id )}}">EDIT POST</a>
         </div>
         <h1> {{ $post->content }}</h1>
     </div>
