@@ -1,8 +1,7 @@
 <template>
      <div class="div">
-         <header>
-           header
-         </header>
+          <Header />
+
          <main>
            <h1>Welcome to public Home</h1>
 
@@ -12,8 +11,12 @@
 </template>
 
 <script>
+import Header from "./components/Header.vue";
 export default {
-   name: 'App'
+   name: 'App',
+   components: {
+       Header
+   }
 }
 </script>
 
