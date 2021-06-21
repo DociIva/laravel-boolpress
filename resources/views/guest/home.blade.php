@@ -7,6 +7,11 @@
         <title>Laravel</title>
     </head>
     <body>
-        HOMEPAGE
+        <div id="root">
+
+
+            {{---Js --}}
+            <script src="{{ asset('js/app.js') }}"></script>
+        </div>
     </body>
 </html>

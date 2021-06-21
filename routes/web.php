@@ -14,10 +14,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('guest.home');
-});
-
 // ROTTE PER AUTENTICAZIONE
 Auth::routes();
 
@@ -38,9 +34,16 @@ Route::prefix('admin')
 
 });
 
-//front office
-/*
-Route::get(' {any?}', function() {
+/**
+ * Questo era prima
+ * Route::get('/', function () {
+ *  return view('guest.home');
+ *});
+ */
+//Front office
+
+// Deve essere scritto tutto attaccato ".*"
+Route::get('{any?}', function() {
     return view('guest.home');
-})->where('any', '. *');
-*/
+})->where('any', ".*");
+
