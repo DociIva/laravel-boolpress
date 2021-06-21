@@ -9,7 +9,7 @@
                  <tr>
                      <td>Id</td>
                      <td>Title</td>
-                     <td collapse="3">Action</td>
+                     <td colspan="3">Action</td>
                  </tr>
              </thead>
              <tbody>

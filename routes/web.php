@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('guest.welcome');
+    return view('guest.home');
 });
 
 // ROTTE PER AUTENTICAZIONE
@@ -30,6 +30,7 @@ Route::prefix('admin')
     ->middleware('auth')
     ->name('admin.')
     ->group(function () {
+        //Rotta home admin
         Route::get('/', 'HomeController@index')->name('home');
 
         //Rotte resource posts
