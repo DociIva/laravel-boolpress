@@ -1,5 +1,5 @@
 require('./bootstrap');
 
-//console.log('SCRIPT FOR ADMIN PAGES');
+console.log('SCRIPT FOR ADMIN PAGES');
 
 

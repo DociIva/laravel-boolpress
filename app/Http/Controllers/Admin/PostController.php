@@ -6,8 +6,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
+use App\Category;
 // Pirma dichiarazione
 use App\Post;
+
 
 
 class PostController extends Controller
@@ -32,8 +34,10 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
-        return view('admin.posts.create');
+        // As tutte 
+        $categories = Category::all();
+
+        return view('admin.posts.create', compact('categories'));
     }
 
     /**
@@ -46,8 +50,9 @@ class PostController extends Controller
     {
         //VALIDAZIONE
         $request->validate([ 
-            'title' => 'required|unique:posts!max:5', 
+            'title' => 'required|unique:posts|max:255', 
             'content' => 'required',
+            'category_id' => 'nullable|exists:categories,id' // validazione della selezione 
         ], [
 
             'required' => 'The :attribute is required!!',
