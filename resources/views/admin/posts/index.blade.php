@@ -16,9 +16,10 @@
         <table  class="table mt-5">
              <thead>
                  <tr>
-                     <td>Id</td>
-                     <td>Title</td>
-                     <td colspan="3">Action</td>
+                     <th>Id</th>
+                     <th>Title</th>
+                     <th>Category</th>
+                     <th colspan="3">Action</th>
                  </tr>
              </thead>
              <tbody>
@@ -26,6 +27,9 @@
                      <tr>
                         <td>{{ $post->id }}</td>
                         <td>{{ $post->title }}</td>
+                        <td>@if ($post->category)
+                            {{ $post->category->name }}
+                        @endif</td>
                         <td> 
                             <a class="btn btn-success" href="{{ route('admin.posts.show', $post->id)  }}">SHOW</a>
                         </td>
@@ -44,5 +48,22 @@
                  @endforeach
              </tbody>
         </table>
+        {{-- GET POSTS BY CATEGORY--}}
+        <h2>POST BY CATEGORY</h2>
+        @foreach ($categories as $category)
+            <h3 class="mb-4">
+               {{ $category->name }}
+            </h3>
+            {{-- @dump($category->posts) --}}
+
+            @forelse ($category->posts as $post)
+                <h4>
+                    <a href="{{ route('admin.posts.show', $post->id )}}">{{ $post->title }}</a>
+                </h4>
+            @empty
+                There are no posts for this category at the moment. 
+                <a href="{{ route('admin.posts.create')}}">Create New Post</a>
+            @endforelse
+        @endforeach
     </div>
 @endsection

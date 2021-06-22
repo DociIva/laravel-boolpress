@@ -56,6 +56,7 @@
                           <div class="feedback">{{ $message }}</div> 
                         @enderror
                     </div>
+                    
                     <button type="submit" class="btn btn-primary">Create Post</button>
 
                 </form>

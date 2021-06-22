@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Str;
 
 use App\Category;
@@ -24,7 +25,9 @@ class PostController extends Controller
         //Per prendere tutti i post e farli vedere in archivio che poi usi nella index
         $posts = Post::all();
 
-        return view('admin.posts.index', compact('posts'));
+        $categories = Category::all();
+
+        return view('admin.posts.index', compact('posts', 'categories'));
     }
 
     /**
@@ -50,7 +53,7 @@ class PostController extends Controller
     {
         //VALIDAZIONE
         $request->validate([ 
-            'title' => 'required|unique:posts|max:255', 
+            'title' =>  'required|unique:posts|max:255', 
             'content' => 'required',
             'category_id' => 'nullable|exists:categories,id' // validazione della selezione 
         ], [
@@ -102,11 +105,14 @@ class PostController extends Controller
     {
         //
         $post = Post::find($id);
+
+        $categories = Category::all();
+
         if( ! $post) {
             abort(404);
         }
         
-        return view('admin.posts.edit', compact('post'));
+        return view('admin.posts.edit', compact('post', 'categories'));
     }
 
     /**
@@ -120,8 +126,12 @@ class PostController extends Controller
     {
         //VALIDE
         $request->validate([ 
-            'title' => 'required|unique:posts!max:5', 
+            'title' => [
+                Rule::unique('posts')->ignore($id),
+                'max:255'
+            ], 
             'content' => 'required',
+            'category_id' => 'nullable|exists:categories,id'
         ], [
 
             'required' => 'The :attribute is required!!',
