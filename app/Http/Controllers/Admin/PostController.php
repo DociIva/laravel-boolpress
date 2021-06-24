@@ -141,7 +141,8 @@ class PostController extends Controller
                 'max:255'
             ], 
             'content' => 'required',
-            'category_id' => 'nullable|exists:categories,id'
+            'category_id' => 'nullable|exists:categories,id',
+            'tags' => 'nullable|exists:tags,id'
         ], [
 
             'required' => 'The :attribute is required!!',
@@ -149,6 +150,8 @@ class PostController extends Controller
             'max' => 'Max :max chararters allowed for the :attribute'
         ]);
         $data = $request->all();
+
+        //dd($data);
 
         $post = Post::find($id);
 
@@ -158,6 +161,14 @@ class PostController extends Controller
         }
 
         $post->update($data); // Fillable nec
+
+        //Aggiorna relazione tab pivot
+        if(array_key_exists('tags', $data)) {
+            //aggiungere record tab pivot
+            $post->tags()->sync($data['tags']); // aggiunge e rimuove vecchio o nuovo
+        } else {
+            $post->tags()->detach(); // rimuove tutti i record della tab pivot
+        }
 
         return redirect()->route('admin.posts.show', $post->id);
     }

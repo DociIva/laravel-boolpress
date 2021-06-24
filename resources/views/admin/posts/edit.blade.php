@@ -66,13 +66,11 @@
 
                     <div class="mb-3">
 
-                       
-
                         @foreach ($tags as $tag)
                             <span class="d-inline-block mr-3">
                                 <input type="checkbox" name="tags[]" id="tag{{$loop->iteration}} "
                                 value="{{$tag->id }}" 
-                                @if ( $errors->any() && in_array($tag->id, old('tags'))) 
+                                @if ($errors->any() && in_array($tag->id, old('tags'))) 
                                     checked 
                                 @elseif( ! $errors->any() && $post->tags->contains($tag->id))
                                     checked
@@ -84,7 +82,7 @@
 
                             </span>
                         @endforeach
-                        @error('tags_id') 
+                        @error('tags') 
                           <div class="feedback">{{ $message }}</div> 
                         @enderror
                     </div>
