@@ -67,7 +67,7 @@ class PostController extends Controller
         ]);
 
         $data = $request->all();
-        dd($data);
+       //dd($data);
 
         //Slug generate
         $data['slug'] = Str::slug($data['title'], '-');
@@ -81,10 +81,8 @@ class PostController extends Controller
 
         //Salvare relazione con tags tabella pivot
         if(array_key_exists('tags', $data)) {
-        
-            $new_post->tags()->attach($data['tags']);
+            $new_post->tags()->attach($data['tags']); // Aggiunge i record nella tabella pivot
         }
-
         return redirect()->route('admin.posts.show', $new_post->id);
     }
 
@@ -117,12 +115,14 @@ class PostController extends Controller
         $post = Post::find($id);
 
         $categories = Category::all();
+        
+        $tags = Tag::all();
 
         if( ! $post) {
             abort(404);
         }
         
-        return view('admin.posts.edit', compact('post', 'categories'));
+        return view('admin.posts.edit', compact('post', 'categories','tags'));
     }
 
     /**

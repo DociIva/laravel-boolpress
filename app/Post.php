@@ -26,7 +26,7 @@ class Post extends Model
      * RELAZIONE CON TAGS
      * POST - TAGS
      */
-    public function Tags() {
+    public function tags() {
         return $this->belongsToMany('App\Tag');
     }
 } 

@@ -23,7 +23,7 @@
 
                     <div class="mb-3">
                         <label for="title" class="form-label">TITLE*</label>
-                        <input type="text" class="form-control  @error('title') is-valid @enderror"
+                        <input type="text" class="form-control  @error('title') is-invalid @enderror"
                             name="title" id="title" value="{{ old('title')}}">
                         @error('title')
                             <div class="feedback">
@@ -34,22 +34,24 @@
                     </div>
                     <div class="mb-3">
                         <label for="content" class="form-label">CONTENT*</label>
-                        <textarea class="form-control  @error('content') is-valid @enderror" 
+                        <textarea class="form-control  @error('content') is-invalid @enderror" 
                                   name="content" id="content" rows="6">{{ old('content')}}</textarea>
                         @error('content')
-                        <div class="feedback">
+                         <div class="feedback">
                            {{$message}}
-                        </div>
-                    @enderror
+                         </div>
+                       @enderror
                     </div>
                     <div class="mb-3">
                         <label for="category_id">Category</label>
-                        <select class="form-control" name="category_id" id="category_id">
+                        <select class="form-control  @error('category_id') is-invalid @enderror"
+                                   name="category_id" id="category_id">
                             <option value="">-> Select Category <-</option>
                             @foreach ($categories as $category)
                                 <option value="{{ $category->id }}"
                                     @if ($category->id == old('category_id')) selected @endif >
-                                    {{ $category->name }}</option>
+                                    {{ $category->name }}
+                                </option>
                             @endforeach
                         </select>
                         @error('category_id') 
@@ -60,21 +62,20 @@
                     {{-- TAGS --}}
                     <h4>TAGS</h4>
 
-                    <div class="MB">
+                    <div class="mb-3">
                         @foreach ($tags as $tag)
                             <span class="d-inline-block mr-3">
-                                <input type="checkbox" name="tags[]" id="tag{{$loop->iteration}} ">
-                                <label for="tag{{$loop->iteration}}" 
-                                       value="{{$tag->id }}" 
-                                       @if (in_array($tag->id, old('tags', [] ))) checked   
-                                       @endif
+                                <input type="checkbox" name="tags[]" id="tag{{$loop->iteration}} "
+                                value="{{$tag->id }}" 
+                                @if (in_array($tag->id, old('tags', []))) checked @endif
                                 >
+                                <label for="tag{{$loop->iteration}}">
                                    {{ $tag->name }}
                                 </label>
 
                             </span>
                         @endforeach
-                        @error('tags_id') 
+                        @error('tags') 
                           <div class="feedback">{{ $message }}</div> 
                         @enderror
                     </div>
