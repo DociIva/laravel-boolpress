@@ -16,7 +16,7 @@
         </div>
         <div> {{ $post->content }}<div>
         {{-- POST TAGS --}}
-        @dump($post->tags)
+        {{-- @dump($post->tags) --}}
 
         @if (count($post->tags) > 0 )
             <h4>TAGS</h4>

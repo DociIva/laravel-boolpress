@@ -183,6 +183,11 @@ class PostController extends Controller
     {
         //
         $post = Post::find($id);
+         
+        //Pulizia degli orfani da tabella pivot
+ 
+        $post->tags()->detach();
+
         $post->delete();
 
         return redirect()->route('admin.posts.index')->with('deleted', $post->title);
