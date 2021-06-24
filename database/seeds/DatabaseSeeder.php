@@ -12,8 +12,10 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
+            // per poter lanciare il comando solo del seed | controllare anche l'ordine
             PostsTableSeeder::class,
             CategoriesTableSeeder::class,
+            TagsTableSeeder::class,
         ]);
     }
 }

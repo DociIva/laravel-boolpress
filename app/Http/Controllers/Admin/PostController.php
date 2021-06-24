@@ -10,6 +10,7 @@ use Illuminate\Support\Str;
 use App\Category;
 // Pirma dichiarazione
 use App\Post;
+use App\Tag;
 
 
 
@@ -39,8 +40,9 @@ class PostController extends Controller
     {
         // As tutte 
         $categories = Category::all();
+        $tags = Tag::all();
 
-        return view('admin.posts.create', compact('categories'));
+        return view('admin.posts.create', compact('categories', 'tags'));
     }
 
     /**
@@ -55,7 +57,8 @@ class PostController extends Controller
         $request->validate([ 
             'title' =>  'required|unique:posts|max:255', 
             'content' => 'required',
-            'category_id' => 'nullable|exists:categories,id' // validazione della selezione 
+            'category_id' => 'nullable|exists:categories,id', // validazione della selezione 
+            'tags' => 'nullable|exists:tags,id',
         ], [
 
             'required' => 'The :attribute is required!!',
@@ -64,6 +67,7 @@ class PostController extends Controller
         ]);
 
         $data = $request->all();
+        dd($data);
 
         //Slug generate
         $data['slug'] = Str::slug($data['title'], '-');
@@ -74,6 +78,12 @@ class PostController extends Controller
         $new_post->fill($data); // <- fillable dichiarare prop del model post 
         
         $new_post->save();
+
+        //Salvare relazione con tags tabella pivot
+        if(array_key_exists('tags', $data)) {
+        
+            $new_post->tags()->attach($data['tags']);
+        }
 
         return redirect()->route('admin.posts.show', $new_post->id);
     }
