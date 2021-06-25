@@ -5,6 +5,7 @@
         @if (session('deleted'))
             <div class="alert alert-seccess">
                    <strong> {{session('deleted')}}</strong>
+                   deleted successfully
             </div>
 
         @endif
