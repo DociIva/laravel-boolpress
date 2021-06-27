@@ -14,7 +14,17 @@ class PostController extends Controller
         //$posts = Post::all();
 
         $posts = Post::paginate(2);
-         //restitutisce il date
+         //restitutisce il date | puoi mettere anche il compact
         return response()->json($posts);
+    }
+    /**
+     * GET POST DETAIL DY SLUG 
+     */
+    public function show($slug) {
+       //dump($slug);
+
+       $post = Post::where('slug', $slug)->with(['category', 'tags'])->first();
+          
+       return response()->json($post);
     }
 }

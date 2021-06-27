@@ -16,8 +16,10 @@ window.axios = require('axios');
 
 //Init Vue main instance
 import App from './App.vue';
+import router from './routes';
 
 const root = new Vue({
     el:'#root',
+    router, // <- grazie all'export di routes
     render: h => h(App)
 });
