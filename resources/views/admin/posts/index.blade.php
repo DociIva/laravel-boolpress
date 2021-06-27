@@ -17,20 +17,26 @@
         <table  class="table mt-5">
              <thead>
                  <tr>
-                     <th>Id</th>
-                     <th>Title</th>
-                     <th>Category</th>
-                     <th colspan="3">Action</th>
+                    <th>Id</th>
+                    <th>Title</th>
+                    <th>Category</th>
+                    <th>Create</th>
+                    <th colspan="3">Action</th>
                  </tr>
              </thead>
              <tbody>
                  @foreach ($posts as $post)
-                     <tr>
+                   <tr>
                         <td>{{ $post->id }}</td>
                         <td>{{ $post->title }}</td>
                         <td>@if ($post->category)
                             {{ $post->category->name }}
                         @endif</td>
+                        <td>
+                            <div>{{ $post->created_at->format('l d/m/y') }}</div>
+                            <div>{{ $post->created_at->diffForHumans() }}</div>
+                        </td>
+
                         <td> 
                             <a class="btn btn-success" href="{{ route('admin.posts.show', $post->id)  }}">SHOW</a>
                         </td>
@@ -45,7 +51,7 @@
                             </form>
                         </td>
 
-                     </tr>
+                  </tr>
                  @endforeach
              </tbody>
         </table>

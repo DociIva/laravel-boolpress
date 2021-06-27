@@ -9,6 +9,8 @@
  */
 
 window.Vue = require('vue');
+//registra xios come parte prototipata di wi
+window.axios = require('axios');
 
 // Instanziare Vue.js
 

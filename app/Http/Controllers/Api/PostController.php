@@ -11,8 +11,10 @@ class PostController extends Controller
     //GET BLOG POSTS (ARCHIVIO)
     public function index() {
         // fare ciò che ti serve da ritornare
-        $posts = Post::all();
+        //$posts = Post::all();
 
+        $posts = Post::paginate(2);
+         //restitutisce il date
         return response()->json($posts);
     }
 }
