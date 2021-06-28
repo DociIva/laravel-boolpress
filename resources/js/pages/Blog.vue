@@ -7,7 +7,7 @@
                     <div> {{ formatDate(post.created_at)}}</div>
 
                     <router-link :to="{name: 'post-detail', params: {slug: post.slug }}"> Read More </router-link>
-                </article>W
+                </article>
 
                <section class="navigation">
                     <button

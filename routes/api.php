@@ -22,7 +22,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('/test', function() {
     return response()->json([
         'name' =>['Paolo', 'Luca', 'Pippo', 'Pluto'],
-        'lorem' => ''
+        'lorem' => 'a'
     ]);
 });
 /**
